@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/New Expense/NewExpense";
+
 const App = () => {
   const expenses = [
     {
@@ -26,10 +29,22 @@ const App = () => {
       date: new Date(2021, 2, 28),
     },
   ];
+  const [NewExpenses, setNewExpenses] = useState(expenses);
+
+  const addExpenseHandler = (expense) => {
+    setNewExpenses((prevExpenses) => {
+      return [expense, ...prevExpenses];
+    });
+  };
+
+  useEffect(() => {
+    console.log("App.js useEffect");
+  });
   return (
     <div>
       <h2>Let's get started!</h2>
-      <Expenses items={expenses} />
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <Expenses items={NewExpenses} />
     </div>
   );
 };
